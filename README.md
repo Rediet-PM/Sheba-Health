@@ -1,35 +1,73 @@
-# Sheba-Health
-AI-powered health record system for early diagnosis and prevention in African communities.
-# Sheba EHR – AI-powered Health Record System for Africa
+# React + TypeScript + Vite
 
-Sheba is an open-source, AI-powered electronic health record (EHR) platform designed for African communities. Our mission is to improve early diagnosis, prevention, and treatment outcomes by building a local, data-informed system for frontline health workers.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Vision
+Currently, two official plugins are available:
 
-- Help healthcare workers diagnose and prevent diseases early using AI trained on African data.
-- Build interoperable, decentralized records that follow the patient across clinics and hospitals.
-- Support patient consent and genomic data collection to inform inclusive drug development.
-- Create the foundation for Africa’s largest health-biobank to unlock breakthroughs in public health.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Status
+## React Compiler
 
-We are in the early research and development phase. This repository will be updated regularly as we build out the MVP and begin testing with partners in Kenya and Ethiopia.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Tech Stack (Planned)
+## Expanding the ESLint configuration
 
-- AI & Machine Learning (for clinical insights and pattern recognition)
-- Interoperable Health Data Standards (e.g. HL7 FHIR)
-- Secure, consent-based patient data handling
-- Future support for genomic data layers
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Get Involved
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-We welcome developers, healthcare workers, researchers, and funders to collaborate with us. If you’d like to contribute, reach out!
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## License
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-This project will use an open-source license (MIT or similar) to ensure free access and collaboration.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
----
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-**This project is led by [Rediet Kassahun](https://www.linkedin.com/in/redietkassahun), an African healthcare innovator working at the intersection of medicine, data, and equity.**
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
